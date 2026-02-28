@@ -1,0 +1,27 @@
+{
+  "name": "sidequest-backend",
+  "version": "1.0.0",
+  "description": "SideQuest unified backend — voice, navigation, vault, rewards",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test:gemini": "node tests/test-gemini.js",
+    "test:vault": "node tests/test-vault.js",
+    "test:solana": "node tests/test-solana.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.15.0",
+    "@metaplex-foundation/mpl-bubblegum": "^5.0.2",
+    "@metaplex-foundation/umi": "^1.5.1",
+    "@metaplex-foundation/umi-bundle-defaults": "^0.9.2",
+    "@solana/web3.js": "^1.95.3",
+    "@supabase/supabase-js": "^2.98.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "elevenlabs": "^1.59.0",
+    "express": "^4.19.2",
+    "uuid": "^10.0.0"
+  }
+}
