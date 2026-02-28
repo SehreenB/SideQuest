@@ -22,12 +22,12 @@ interface VoiceRequestBody {
 // ─── Voice ID Mapping ─────────────────────────────────────────────────────────
 
 const modeVoiceMap: Record<NavigatorMode, string> = {
-    Adventure: "21m00Tcm4TlvDq8ikWAM",
-    Foodie: "21m00Tcm4TlvDq8ikWAM",
-    Nature: "21m00Tcm4TlvDq8ikWAM",
-    Culture: "21m00Tcm4TlvDq8ikWAM",
-    Social: "21m00Tcm4TlvDq8ikWAM",
-    Mystery: "21m00Tcm4TlvDq8ikWAM",
+    Adventure: "IKne3meq5aSn9XLyUdCD",
+    Foodie: "cgSgspJ2msm6clMCkdW9",
+    Nature: "SAz9YHcvj6GT2YYXdXww",
+    Culture: "XrExE9yKIg1WjnnlVkGX",
+    Social: "TX3LPaxmHKxFdv7VOQHJ",
+    Mystery: "N2lVS1w4EtoT3dr4eOWO",
 };
 
 // ─── Emotional Prompt Tags ────────────────────────────────────────────────────
