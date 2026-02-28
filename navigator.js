@@ -1,7 +1,7 @@
 /**
  * navigator.js
- * Uses Gemini 2.0 Flash with Google Maps grounding to return 3 waypoints
- * based on coordinates, theme, and travel mode.
+ * Uses Gemini with Google Search grounding to return waypoints
+ * based on coordinates, theme, travel mode, and number of stops.
  */
 
 "use strict";
@@ -10,36 +10,40 @@ require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const RADIUS_BY_MODE = {
-  walk: 2,   // km
-  car: 15,  // km
-  cycle: 7,   // km  (sensible default; extend as needed)
+  walk: 2,
+  car: 15,
+  cycle: 7,
 };
 
 /**
- * Find 3 waypoints near a given location.
+ * Find waypoints near a given location.
  *
- * @param {number}  lat        - Latitude
- * @param {number}  lng        - Longitude
- * @param {string}  theme      - E.g. "street art", "historic pubs", "nature"
- * @param {string}  travelMode - "walk" | "car" | "cycle"
- * @returns {Promise<{ waypoints: Array<{name,address,lat,lng,description}> }>}
+ * @param {number} lat
+ * @param {number} lng
+ * @param {string} theme
+ * @param {string} travelMode - "walk" | "car"
+ * @param {number} stops      - how many waypoints to return
  */
-async function findWaypoints(lat, lng, theme, travelMode = "walk") {
+async function findWaypoints(lat, lng, theme, travelMode = "walk", stops = 3) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
   const radius = RADIUS_BY_MODE[travelMode.toLowerCase()] ?? 2;
 
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash",
-    tools: [{ googleSearch: {} }],   // Google Search grounding (Maps-aware)
+    tools: [{ googleSearch: {} }],
   });
 
   const prompt = `
-You are a local tour guide AI. A user is standing at latitude ${lat}, longitude ${lng}.
-Their travel mode is "${travelMode}" so only suggest places within ${radius} km.
-Their chosen theme is: "${theme}".
+You are a local tour guide AI for the SideQuest exploration app.
+A user is standing at latitude ${lat}, longitude ${lng}.
+Travel mode: "${travelMode}" — only suggest places within ${radius} km.
+Theme: "${theme}"
+Number of stops requested: ${stops}
 
-Return EXACTLY 3 waypoints that fit the theme and are reachable within ${radius} km.
-Respond ONLY with valid JSON – no markdown, no prose, no code fences.
+Return EXACTLY ${stops} waypoints that fit the theme, are reachable within ${radius} km,
+and make sense as a sequential route (ordered by logical walking/driving path).
+
+Respond ONLY with valid JSON — no markdown, no prose, no code fences.
 
 Schema:
 {
@@ -49,7 +53,7 @@ Schema:
       "address": "Full street address",
       "lat": 0.0,
       "lng": 0.0,
-      "description": "One sentence about why this fits the theme."
+      "description": "One sentence about why this fits the theme and is worth visiting."
     }
   ]
 }
@@ -59,7 +63,6 @@ Schema:
   const response = result.response;
   const text = response.text().trim();
 
-  // Strip accidental markdown fences
   const clean = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
 
   let parsed;
