@@ -1,0 +1,24 @@
+{
+  "name": "sidequest-backend",
+  "version": "1.0.0",
+  "description": "SideQuest backend – AI-powered waypoints, S3 vaults, and cNFT rewards",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "test:gemini": "node tests/test-gemini.js",
+    "test:vault": "node tests/test-vault.js",
+    "test:solana": "node tests/test-solana.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.15.0",
+    "@metaplex-foundation/mpl-bubblegum": "^5.0.2",
+    "@metaplex-foundation/umi": "^1.5.1",
+    "@metaplex-foundation/umi-bundle-defaults": "^0.9.2",
+    "@solana/web3.js": "^1.95.3",
+    "@supabase/supabase-js": "^2.98.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "uuid": "^10.0.0"
+  }
+}
