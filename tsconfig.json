@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+    // Environment Settings
+    "module": "commonjs", // ← Changed: Express/Node needs commonjs, not nodenext
+    "target": "ES2020", // ← Changed: esnext can cause issues with Node
+    "lib": [
+      "ES2020"
+    ],
+    "types": [
+      "node"
+    ], // ← Changed: enable Node.js types
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    // Recommended Options
+    "strict": true,
+    "esModuleInterop": true, // ← Added: required for importing express, dotenv etc.
+    "skipLibCheck": true,
+    // Remove these — they're for React/frontend, not a Node backend
+    // "jsx": "react-jsx",              ← REMOVED
+    // "verbatimModuleSyntax": true,    ← REMOVED (breaks commonjs imports)
+    // "isolatedModules": true,         ← REMOVED
+    // "noUncheckedSideEffectImports"   ← REMOVED
+    // "moduleDetection": "force"       ← REMOVED
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
