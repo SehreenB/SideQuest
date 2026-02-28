@@ -1,2 +1,2 @@
-# WrongTurns
+# SideQuest
 DeerHacks 2026
